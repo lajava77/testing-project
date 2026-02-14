@@ -1,0 +1,89 @@
+---
+import { t } from '../utils/i18n';
+import '../styles/global.css';
+
+interface Props {
+  title?: string;
+  description?: string;
+  locale?: string;
+}
+
+const { title = "Astro i18n Site", description = "Static website with Astro, Tailwind, and i18n", locale = "es" } = Astro.props;
+---
+
+<!doctype html>
+<html lang={locale}>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="description" content={description} />
+    <meta name="viewport" content="width=device-width" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="icon" href="/favicon.ico" />
+    <meta name="generator" content={Astro.generator} />
+    <title>{title}</title>
+  </head>
+  <body class="min-h-screen flex flex-col bg-gray-50">
+    <!-- Header -->
+    <header class="bg-white shadow-md">
+      <nav class="container mx-auto px-4 py-4 flex justify-between items-center">
+        <div class="logo">
+          <a href={`/${locale}`} class="text-2xl font-bold text-blue-600 hover:text-blue-800 transition-colors">
+            Mi Sitio
+          </a>
+        </div>
+        <ul class="flex gap-6 items-center">
+          <li>
+            <a href={`/${locale}`} class="text-gray-700 hover:text-blue-600 transition-colors">
+              {t("common.nav.home", locale)}
+            </a>
+          </li>
+          <li>
+            <a href={`/${locale}/about`} class="text-gray-700 hover:text-blue-600 transition-colors">
+              {t("common.nav.about", locale)}
+            </a>
+          </li>
+          <li>
+            <a href={`/${locale}/contact`} class="text-gray-700 hover:text-blue-600 transition-colors">
+              {t("common.nav.contact", locale)}
+            </a>
+          </li>
+        </ul>
+        <!-- Language Switcher -->
+        <div class="flex gap-2">
+          <a
+            href={`/es${Astro.url.pathname.replace(/^\/(es|en|gl)/, '')}`}
+            class={`px-3 py-1 rounded hover:bg-gray-100 transition-colors ${locale === 'es' ? 'bg-blue-100 text-blue-700 font-semibold' : 'text-gray-600'}`}
+          >
+            ES
+          </a>
+          <a
+            href={`/en${Astro.url.pathname.replace(/^\/(es|en|gl)/, '')}`}
+            class={`px-3 py-1 rounded hover:bg-gray-100 transition-colors ${locale === 'en' ? 'bg-blue-100 text-blue-700 font-semibold' : 'text-gray-600'}`}
+          >
+            EN
+          </a>
+          <a
+            href={`/gl${Astro.url.pathname.replace(/^\/(es|en|gl)/, '')}`}
+            class={`px-3 py-1 rounded hover:bg-gray-100 transition-colors ${locale === 'gl' ? 'bg-blue-100 text-blue-700 font-semibold' : 'text-gray-600'}`}
+          >
+            GL
+          </a>
+        </div>
+      </nav>
+    </header>
+
+    <!-- Main Content -->
+    <main class="flex-grow container mx-auto px-4 py-8">
+      <slot />
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-white py-6 mt-auto">
+      <div class="container mx-auto px-4 text-center">
+        <p class="text-gray-300">
+          © {new Date().getFullYear()} Mi Sitio. {t("common.footer.rights", locale)}.
+        </p>
+      </div>
+    </footer>
+  </body>
+</html>

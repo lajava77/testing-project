@@ -1,0 +1,30 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import { t } from '../../utils/i18n';
+
+const { locale } = Astro.params;
+
+export function getStaticPaths() {
+  return [
+    { params: { locale: 'es' } },
+    { params: { locale: 'en' } },
+    { params: { locale: 'gl' } }
+  ];
+}
+---
+
+<Layout title={`${t("common.nav.about", locale)} - Astro i18n`} locale={locale}>
+  <div class="max-w-3xl mx-auto">
+    <h1 class="text-4xl font-bold text-gray-800 mb-6">
+      {t("common.nav.about", locale)}
+    </h1>
+    <div class="bg-white rounded-lg shadow-lg p-8">
+      <p class="text-gray-700 mb-4 leading-relaxed">
+        This is a sample about page demonstrating the i18n functionality with Astro.
+      </p>
+      <p class="text-gray-700 leading-relaxed">
+        The content automatically adapts to the selected language (Spanish, English, or Galician).
+      </p>
+    </div>
+  </div>
+</Layout>

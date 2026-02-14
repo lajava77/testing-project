@@ -1,0 +1,10 @@
+{
+  "nav": {
+    "home": "Inicio",
+    "about": "Acerca de",
+    "contact": "Contacto"
+  },
+  "footer": {
+    "rights": "Todos los derechos reservados"
+  }
+}
