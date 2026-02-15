@@ -1,0 +1,72 @@
+---
+import type { Locale } from '../utils/i18n';
+import Navbar from '../components/Navbar.astro';
+import Footer from '../components/Footer.astro';
+
+interface Props {
+  title?: string;
+  description?: string;
+  locale: Locale;
+  ogImage?: string;
+}
+
+const {
+  title = 'Ayuda a [Nombre] - Recaudación de fondos para tratamiento VPS13D',
+  description = 'Apoya a una valiente niña de 9 años en su lucha contra la mutación del gen VPS13D. Cada donación nos acerca a proporcionar el mejor tratamiento y cuidado médico posible.',
+  locale,
+  ogImage = '/og-image.jpg'
+} = Astro.props;
+
+const siteUrl = Astro.site || new URL('http://localhost:4321');
+const canonicalURL = new URL(Astro.url.pathname, siteUrl);
+const ogImageURL = new URL(ogImage, siteUrl).toString();
+---
+
+<!doctype html>
+<html lang={locale} class="scroll-smooth">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="generator" content={Astro.generator} />
+
+    <!-- Primary Meta Tags -->
+    <title>{title}</title>
+    <meta name="title" content={title} />
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonicalURL} />
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content={canonicalURL} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content={ogImageURL} />
+    <meta property="og:locale" content={locale === 'es' ? 'es_ES' : locale === 'en' ? 'en_US' : 'gl_ES'} />
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image" />
+    <meta property="twitter:url" content={canonicalURL} />
+    <meta property="twitter:title" content={title} />
+    <meta property="twitter:description" content={description} />
+    <meta property="twitter:image" content={ogImageURL} />
+
+    <!-- Additional Meta Tags -->
+    <meta name="robots" content="index, follow" />
+    <meta name="author" content="Ayuda a [Nombre]" />
+    <meta name="theme-color" content="#10b981" />
+
+    <!-- Preload critical assets -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  </head>
+  <body class="bg-soft-slate-50 text-soft-slate-900 antialiased">
+    <Navbar locale={locale} />
+
+    <main>
+      <slot />
+    </main>
+
+    <Footer locale={locale} />
+  </body>
+</html>

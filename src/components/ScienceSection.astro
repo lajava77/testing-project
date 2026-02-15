@@ -1,0 +1,161 @@
+---
+import { t, type Locale } from '../utils/i18n';
+import Icon from './Icon';
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+---
+
+<section class="py-20 bg-white">
+  <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+    <!-- Section Header -->
+    <div class="text-center mb-12 space-y-4">
+      <div class="flex items-center justify-center space-x-3">
+        <Icon name="Microscope" className="w-8 h-8 text-deep-indigo-600" client:load />
+        <h2 class="text-4xl font-bold text-deep-indigo-900">
+          {t('home.science.title', locale)}
+        </h2>
+      </div>
+      <p class="text-lg text-soft-slate-600 max-w-2xl mx-auto">
+        {t('home.science.subtitle', locale)}
+      </p>
+    </div>
+
+    <!-- Scientific Content - White Paper Style -->
+    <div class="bg-gradient-to-br from-soft-slate-50 to-white rounded-2xl shadow-lg border border-soft-slate-200 overflow-hidden">
+      <div class="p-8 md:p-12">
+        <article class="prose prose-lg prose-slate max-w-none">
+          <!-- Section 1: What is VPS13D -->
+          <div class="mb-10">
+            <div class="flex items-start space-x-4 mb-4">
+              <div class="flex-shrink-0 w-10 h-10 rounded-full bg-deep-indigo-100 flex items-center justify-center">
+                <span class="text-lg font-bold text-deep-indigo-700">1</span>
+              </div>
+              <div>
+                <h3 class="text-2xl font-bold text-deep-indigo-900 mt-0 mb-3">
+                  {t('home.science.what', locale)}
+                </h3>
+                <p class="text-soft-slate-700 leading-relaxed mb-4">
+                  {t('home.science.whatText', locale)}
+                </p>
+                <!-- Visual indicator -->
+                <div class="bg-deep-indigo-50 border-l-4 border-deep-indigo-500 p-4 rounded-r-lg">
+                  <div class="flex items-center space-x-2 text-sm text-deep-indigo-800">
+                    <Icon name="Dna" className="w-5 h-5" client:load />
+                    <span class="font-semibold">Gen VPS13D → Proteína de transporte de lípidos → Función celular</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Section 2: Impact on Daily Life -->
+          <div class="mb-10">
+            <div class="flex items-start space-x-4 mb-4">
+              <div class="flex-shrink-0 w-10 h-10 rounded-full bg-warm-emerald-100 flex items-center justify-center">
+                <span class="text-lg font-bold text-warm-emerald-700">2</span>
+              </div>
+              <div>
+                <h3 class="text-2xl font-bold text-deep-indigo-900 mt-0 mb-3">
+                  {t('home.science.impact', locale)}
+                </h3>
+                <p class="text-soft-slate-700 leading-relaxed mb-4">
+                  {t('home.science.impactText', locale)}
+                </p>
+                <!-- Symptom list -->
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 mt-4">
+                  <div class="flex items-center space-x-2 bg-soft-slate-50 rounded-lg p-3">
+                    <Icon name="AlertCircle" className="w-5 h-5 text-soft-slate-500 flex-shrink-0" client:load />
+                    <span class="text-sm text-soft-slate-700">
+                      {locale === 'es' ? 'Dificultades motoras' : locale === 'en' ? 'Motor difficulties' : 'Dificultades motoras'}
+                    </span>
+                  </div>
+                  <div class="flex items-center space-x-2 bg-soft-slate-50 rounded-lg p-3">
+                    <Icon name="AlertCircle" className="w-5 h-5 text-soft-slate-500 flex-shrink-0" client:load />
+                    <span class="text-sm text-soft-slate-700">
+                      {locale === 'es' ? 'Temblores' : locale === 'en' ? 'Tremors' : 'Tremores'}
+                    </span>
+                  </div>
+                  <div class="flex items-center space-x-2 bg-soft-slate-50 rounded-lg p-3">
+                    <Icon name="AlertCircle" className="w-5 h-5 text-soft-slate-500 flex-shrink-0" client:load />
+                    <span class="text-sm text-soft-slate-700">
+                      {locale === 'es' ? 'Problemas de habla' : locale === 'en' ? 'Speech problems' : 'Problemas de fala'}
+                    </span>
+                  </div>
+                  <div class="flex items-center space-x-2 bg-soft-slate-50 rounded-lg p-3">
+                    <Icon name="AlertCircle" className="w-5 h-5 text-soft-slate-500 flex-shrink-0" client:load />
+                    <span class="text-sm text-soft-slate-700">
+                      {locale === 'es' ? 'Retrasos cognitivos' : locale === 'en' ? 'Cognitive delays' : 'Atrasos cognitivos'}
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Section 3: Research and Hope -->
+          <div>
+            <div class="flex items-start space-x-4 mb-4">
+              <div class="flex-shrink-0 w-10 h-10 rounded-full bg-warm-emerald-100 flex items-center justify-center">
+                <span class="text-lg font-bold text-warm-emerald-700">3</span>
+              </div>
+              <div>
+                <h3 class="text-2xl font-bold text-deep-indigo-900 mt-0 mb-3">
+                  {t('home.science.research', locale)}
+                </h3>
+                <p class="text-soft-slate-700 leading-relaxed mb-4">
+                  {t('home.science.researchText', locale)}
+                </p>
+                <!-- Hope indicators -->
+                <div class="bg-gradient-to-br from-warm-emerald-50 to-warm-emerald-100 rounded-xl p-6 border border-warm-emerald-200">
+                  <div class="flex items-start space-x-3">
+                    <Icon name="TrendingUp" className="w-6 h-6 text-warm-emerald-600 flex-shrink-0 mt-1" client:load />
+                    <div>
+                      <h4 class="font-bold text-warm-emerald-900 mb-2">
+                        {locale === 'es' ? 'Tratamientos disponibles' : locale === 'en' ? 'Available treatments' : 'Tratamentos dispoñibles'}
+                      </h4>
+                      <ul class="space-y-1 text-sm text-warm-emerald-800">
+                        <li>• {locale === 'es' ? 'Fisioterapia especializada' : locale === 'en' ? 'Specialized physical therapy' : 'Fisioterapia especializada'}</li>
+                        <li>• {locale === 'es' ? 'Terapia ocupacional' : locale === 'en' ? 'Occupational therapy' : 'Terapia ocupacional'}</li>
+                        <li>• {locale === 'es' ? 'Intervenciones tempranas' : locale === 'en' ? 'Early interventions' : 'Intervencións temperás'}</li>
+                        <li>• {locale === 'es' ? 'Equipamiento adaptado' : locale === 'en' ? 'Adapted equipment' : 'Equipamento adaptado'}</li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <!-- Placeholder for scientific diagram -->
+        <div class="mt-10 bg-soft-slate-100 rounded-xl p-8 text-center border-2 border-dashed border-soft-slate-300">
+          <Icon name="FileText" className="w-12 h-12 text-soft-slate-400 mx-auto mb-3" client:load />
+          <p class="text-soft-slate-600 font-medium">
+            {locale === 'es' ? 'Espacio para diagrama científico de VPS13D' : locale === 'en' ? 'Space for VPS13D scientific diagram' : 'Espazo para diagrama científico de VPS13D'}
+          </p>
+          <p class="text-sm text-soft-slate-500 mt-2">
+            {locale === 'es' ? 'Agregar ilustración médica' : locale === 'en' ? 'Add medical illustration' : 'Engadir ilustración médica'}
+          </p>
+        </div>
+
+        <!-- Call to action -->
+        <div class="mt-10 text-center">
+          <p class="text-soft-slate-700 mb-4">
+            {locale === 'es' ? 'Tu apoyo puede marcar la diferencia en la vida de [Nombre]' : locale === 'en' ? 'Your support can make a difference in [Name]\'s life' : 'O teu apoio pode marcar a diferenza na vida de [Nome]'}
+          </p>
+          <a
+            href="#donate"
+            class="inline-flex items-center px-8 py-3 bg-warm-emerald-500 text-white font-semibold rounded-lg hover:bg-warm-emerald-600 transition-colors shadow-lg"
+          >
+            <Icon name="Heart" className="w-5 h-5 mr-2" client:load />
+            {t('common.cta.donate', locale)}
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

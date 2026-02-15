@@ -1,8 +1,12 @@
 ---
-import Layout from '../../layouts/Layout.astro';
-import { t } from '../../utils/i18n';
+import MainLayout from '../../layouts/MainLayout.astro';
+import Hero from '../../components/Hero.astro';
+import ProgressCard from '../../components/ProgressCard.astro';
+import ScienceSection from '../../components/ScienceSection.astro';
+import Icon from '../../components/Icon';
+import { t, type Locale } from '../../utils/i18n';
 
-const { locale } = Astro.params;
+const { locale } = Astro.params as { locale: Locale };
 
 export function getStaticPaths() {
   return [
@@ -11,38 +15,201 @@ export function getStaticPaths() {
     { params: { locale: 'gl' } }
   ];
 }
+
+const title = locale === 'es'
+  ? 'Ayuda a [Nombre] - Recaudación para tratamiento VPS13D'
+  : locale === 'en'
+  ? 'Help [Name] - VPS13D Treatment Fundraising'
+  : 'Axuda a [Nome] - Recadación para tratamento VPS13D';
+
+const description = t('home.hero.subheadline', locale);
 ---
 
-<Layout title={`${t("common.nav.home", locale)} - Astro i18n`} locale={locale}>
-  <div class="max-w-4xl mx-auto text-center">
-    <h1 class="text-5xl font-bold text-gray-800 mb-4">
-      {t("home.welcome", locale)}
-    </h1>
-    <p class="text-xl text-gray-600 mb-8">
-      {t("home.description", locale)}
-    </p>
-    <div class="bg-white rounded-lg shadow-lg p-8 text-left">
-      <h2 class="text-2xl font-semibold text-gray-800 mb-4">
-        Features
-      </h2>
-      <ul class="space-y-3">
-        <li class="flex items-start">
-          <span class="text-blue-600 mr-2">✓</span>
-          <span class="text-gray-700">Astro v5 - Fast static site generation</span>
-        </li>
-        <li class="flex items-start">
-          <span class="text-blue-600 mr-2">✓</span>
-          <span class="text-gray-700">Tailwind CSS v4 - Utility-first CSS framework</span>
-        </li>
-        <li class="flex items-start">
-          <span class="text-blue-600 mr-2">✓</span>
-          <span class="text-gray-700">i18next - Internationalization (ES, EN, GL)</span>
-        </li>
-        <li class="flex items-start">
-          <span class="text-blue-600 mr-2">✓</span>
-          <span class="text-gray-700">TypeScript - Type safety</span>
-        </li>
-      </ul>
+<MainLayout title={title} description={description} locale={locale}>
+  <!-- Hero Section -->
+  <Hero locale={locale} />
+
+  <!-- Fundraising Progress Card -->
+  <ProgressCard locale={locale} />
+
+  <!-- Story Preview Section -->
+  <section id="story" class="py-20 bg-gradient-to-br from-white to-soft-slate-50">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center mb-12">
+        <h2 class="text-4xl font-bold text-deep-indigo-900 mb-4">
+          {t('home.story.title', locale)}
+        </h2>
+      </div>
+
+      <div class="bg-white rounded-2xl shadow-xl p-8 md:p-12 border border-soft-slate-200">
+        <div class="prose prose-lg prose-slate max-w-none">
+          <p class="text-lg text-soft-slate-700 leading-relaxed mb-6">
+            {t('home.story.intro', locale)}
+          </p>
+
+          <!-- Story highlights -->
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6 my-8">
+            <div class="bg-deep-indigo-50 rounded-xl p-6 border border-deep-indigo-100">
+              <div class="flex items-center space-x-3 mb-3">
+                <div class="w-10 h-10 rounded-full bg-deep-indigo-200 flex items-center justify-center">
+                  <Icon name="Heart" className="w-5 h-5 text-deep-indigo-700" client:load />
+                </div>
+                <h3 class="text-lg font-bold text-deep-indigo-900 m-0">
+                  {locale === 'es' ? 'Valentía diaria' : locale === 'en' ? 'Daily courage' : 'Valentía diaria'}
+                </h3>
+              </div>
+              <p class="text-sm text-deep-indigo-800 m-0">
+                {locale === 'es'
+                  ? 'Cada día enfrenta desafíos con una sonrisa y determinación inquebrantable.'
+                  : locale === 'en'
+                  ? 'Every day she faces challenges with a smile and unwavering determination.'
+                  : 'Cada día enfronta desafíos cunha sonrisa e determinación inquebrantable.'}
+              </p>
+            </div>
+
+            <div class="bg-warm-emerald-50 rounded-xl p-6 border border-warm-emerald-100">
+              <div class="flex items-center space-x-3 mb-3">
+                <div class="w-10 h-10 rounded-full bg-warm-emerald-200 flex items-center justify-center">
+                  <Icon name="Users" className="w-5 h-5 text-warm-emerald-700" client:load />
+                </div>
+                <h3 class="text-lg font-bold text-warm-emerald-900 m-0">
+                  {locale === 'es' ? 'Apoyo familiar' : locale === 'en' ? 'Family support' : 'Apoio familiar'}
+                </h3>
+              </div>
+              <p class="text-sm text-warm-emerald-800 m-0">
+                {locale === 'es'
+                  ? 'Una familia dedicada que trabaja incansablemente para brindarle el mejor cuidado.'
+                  : locale === 'en'
+                  ? 'A dedicated family working tirelessly to provide her with the best care.'
+                  : 'Unha familia dedicada que traballa incansablemente para brindarlle o mellor coidado.'}
+              </p>
+            </div>
+
+            <div class="bg-soft-slate-100 rounded-xl p-6 border border-soft-slate-200">
+              <div class="flex items-center space-x-3 mb-3">
+                <div class="w-10 h-10 rounded-full bg-soft-slate-300 flex items-center justify-center">
+                  <Icon name="Sparkles" className="w-5 h-5 text-soft-slate-700" client:load />
+                </div>
+                <h3 class="text-lg font-bold text-soft-slate-900 m-0">
+                  {locale === 'es' ? 'Sueños y esperanzas' : locale === 'en' ? 'Dreams and hopes' : 'Soños e esperanzas'}
+                </h3>
+              </div>
+              <p class="text-sm text-soft-slate-800 m-0">
+                {locale === 'es'
+                  ? 'Sus sueños son simples: jugar, aprender y vivir sin limitaciones.'
+                  : locale === 'en'
+                  ? 'Her dreams are simple: to play, learn, and live without limitations.'
+                  : 'Os seus soños son simples: xogar, aprender e vivir sen limitacións.'}
+              </p>
+            </div>
+
+            <div class="bg-deep-indigo-50 rounded-xl p-6 border border-deep-indigo-100">
+              <div class="flex items-center space-x-3 mb-3">
+                <div class="w-10 h-10 rounded-full bg-deep-indigo-200 flex items-center justify-center">
+                  <Icon name="Target" className="w-5 h-5 text-deep-indigo-700" client:load />
+                </div>
+                <h3 class="text-lg font-bold text-deep-indigo-900 m-0">
+                  {locale === 'es' ? 'Necesidades urgentes' : locale === 'en' ? 'Urgent needs' : 'Necesidades urxentes'}
+                </h3>
+              </div>
+              <p class="text-sm text-deep-indigo-800 m-0">
+                {locale === 'es'
+                  ? 'Terapias especializadas y equipamiento médico adaptado son esenciales ahora.'
+                  : locale === 'en'
+                  ? 'Specialized therapies and adapted medical equipment are essential now.'
+                  : 'Terapias especializadas e equipamento médico adaptado son esenciais agora.'}
+              </p>
+            </div>
+          </div>
+
+          <div class="text-center mt-8">
+            <a
+              href={`/${locale}/story`}
+              class="inline-flex items-center px-8 py-3 bg-deep-indigo-600 text-white font-semibold rounded-lg hover:bg-deep-indigo-700 transition-colors shadow-lg"
+            >
+              <Icon name="BookOpen" className="w-5 h-5 mr-2" client:load />
+              {t('home.story.readMore', locale)}
+            </a>
+          </div>
+        </div>
+      </div>
     </div>
-  </div>
-</Layout>
+  </section>
+
+  <!-- Science Section -->
+  <ScienceSection locale={locale} />
+
+  <!-- Final CTA Section -->
+  <section class="py-20 bg-gradient-to-br from-deep-indigo-600 via-deep-indigo-700 to-deep-indigo-800 relative overflow-hidden">
+    <!-- Decorative elements -->
+    <div class="absolute top-0 left-0 w-full h-full opacity-10">
+      <div class="absolute top-10 left-10 w-64 h-64 bg-warm-emerald-400 rounded-full filter blur-3xl"></div>
+      <div class="absolute bottom-10 right-10 w-96 h-96 bg-warm-emerald-300 rounded-full filter blur-3xl"></div>
+    </div>
+
+    <div class="relative max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+      <div class="space-y-8">
+        <div class="space-y-4">
+          <h2 class="text-4xl sm:text-5xl font-bold text-white">
+            {locale === 'es'
+              ? 'Juntos podemos marcar la diferencia'
+              : locale === 'en'
+              ? 'Together we can make a difference'
+              : 'Xuntos podemos marcar a diferenza'}
+          </h2>
+          <p class="text-xl text-deep-indigo-200 max-w-2xl mx-auto">
+            {locale === 'es'
+              ? 'Cada donación, sin importar el monto, nos acerca un paso más a proporcionar a [Nombre] el tratamiento y cuidado que necesita.'
+              : locale === 'en'
+              ? 'Every donation, no matter the amount, brings us one step closer to providing [Name] with the treatment and care she needs.'
+              : 'Cada doazón, sen importar o importe, achéganos un paso máis a proporcionar a [Nome] o tratamento e coidado que necesita.'}
+          </p>
+        </div>
+
+        <!-- CTA Buttons -->
+        <div class="flex flex-col sm:flex-row gap-4 justify-center items-center">
+          <a
+            href="#donate"
+            class="group inline-flex items-center px-10 py-4 bg-warm-emerald-500 text-white text-lg font-bold rounded-xl shadow-2xl hover:bg-warm-emerald-600 transition-all duration-300 transform hover:scale-105"
+          >
+            <Icon name="Heart" className="w-6 h-6 mr-3 group-hover:animate-pulse" client:load />
+            {t('common.cta.donate', locale)}
+          </a>
+
+          <a
+            href={`/${locale}/updates`}
+            class="inline-flex items-center px-8 py-4 bg-white/10 backdrop-blur-sm text-white text-lg font-semibold rounded-xl border-2 border-white/30 hover:bg-white/20 transition-all duration-300"
+          >
+            <Icon name="Calendar" className="w-5 h-5 mr-3" client:load />
+            {locale === 'es' ? 'Ver actualizaciones' : locale === 'en' ? 'See updates' : 'Ver actualizacións'}
+          </a>
+        </div>
+
+        <!-- Social share -->
+        <div class="pt-8 border-t border-white/20">
+          <p class="text-deep-indigo-200 mb-4">
+            {locale === 'es'
+              ? 'Comparte esta campaña con tu red'
+              : locale === 'en'
+              ? 'Share this campaign with your network'
+              : 'Comparte esta campaña coa túa rede'}
+          </p>
+          <div class="flex justify-center space-x-4">
+            <button class="w-12 h-12 rounded-full bg-white/10 backdrop-blur-sm hover:bg-white/20 transition-colors flex items-center justify-center border border-white/20">
+              <Icon name="Facebook" className="w-5 h-5 text-white" client:load />
+            </button>
+            <button class="w-12 h-12 rounded-full bg-white/10 backdrop-blur-sm hover:bg-white/20 transition-colors flex items-center justify-center border border-white/20">
+              <Icon name="Twitter" className="w-5 h-5 text-white" client:load />
+            </button>
+            <button class="w-12 h-12 rounded-full bg-white/10 backdrop-blur-sm hover:bg-white/20 transition-colors flex items-center justify-center border border-white/20">
+              <Icon name="Share2" className="w-5 h-5 text-white" client:load />
+            </button>
+            <button class="w-12 h-12 rounded-full bg-white/10 backdrop-blur-sm hover:bg-white/20 transition-colors flex items-center justify-center border border-white/20">
+              <Icon name="Mail" className="w-5 h-5 text-white" client:load />
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</MainLayout>

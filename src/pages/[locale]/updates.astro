@@ -1,0 +1,300 @@
+---
+import MainLayout from '../../layouts/MainLayout.astro';
+import Icon from '../../components/Icon';
+import { t, type Locale } from '../../utils/i18n';
+
+const { locale } = Astro.params as { locale: Locale };
+
+export function getStaticPaths() {
+  return [
+    { params: { locale: 'es' } },
+    { params: { locale: 'en' } },
+    { params: { locale: 'gl' } }
+  ];
+}
+
+const title = t('updates.title', locale);
+const description = t('updates.subtitle', locale);
+
+// Mock update data - replace with real data
+const updates = [
+  {
+    id: 1,
+    category: 'medical',
+    date: '2026-02-10',
+    title: locale === 'es' ? 'Nueva sesión de fisioterapia' : locale === 'en' ? 'New physical therapy session' : 'Nova sesión de fisioterapia',
+    content: locale === 'es'
+      ? 'Hoy [Nombre] tuvo una excelente sesión de fisioterapia. Mostró mejoras en su equilibrio y coordinación.'
+      : locale === 'en'
+      ? 'Today [Name] had an excellent physical therapy session. She showed improvements in her balance and coordination.'
+      : 'Hoxe [Nome] tivo unha excelente sesión de fisioterapia. Amosou melloras no seu equilibrio e coordinación.',
+    image: false
+  },
+  {
+    id: 2,
+    category: 'daily',
+    date: '2026-02-08',
+    title: locale === 'es' ? 'Día de arte y creatividad' : locale === 'en' ? 'Art and creativity day' : 'Día de arte e creatividade',
+    content: locale === 'es'
+      ? 'Pasamos una tarde maravillosa pintando y dibujando. Su creatividad no tiene límites.'
+      : locale === 'en'
+      ? 'We spent a wonderful afternoon painting and drawing. Her creativity knows no bounds.'
+      : 'Pasamos unha tarde marabillosa pintando e debuxando. A súa creatividade non ten límites.',
+    image: true
+  },
+  {
+    id: 3,
+    category: 'milestones',
+    date: '2026-02-05',
+    title: locale === 'es' ? '¡Alcanzamos el 40% de la meta!' : locale === 'en' ? 'We reached 40% of the goal!' : 'Alcanzamos o 40% da meta!',
+    content: locale === 'es'
+      ? 'Gracias a todos nuestros donantes, hemos alcanzado el 40% de nuestra meta de recaudación. ¡Cada aporte cuenta!'
+      : locale === 'en'
+      ? 'Thanks to all our donors, we have reached 40% of our fundraising goal. Every contribution counts!'
+      : 'Grazas a todos os nosos doantes, alcanzamos o 40% da nosa meta de recadación. Cada achega conta!',
+    image: false
+  },
+  {
+    id: 4,
+    category: 'medical',
+    date: '2026-02-01',
+    title: locale === 'es' ? 'Consulta con especialista' : locale === 'en' ? 'Specialist consultation' : 'Consulta con especialista',
+    content: locale === 'es'
+      ? 'Tuvimos una consulta muy productiva con el equipo médico. Discutimos nuevas opciones de terapia.'
+      : locale === 'en'
+      ? 'We had a very productive consultation with the medical team. We discussed new therapy options.'
+      : 'Tivemos unha consulta moi produtiva co equipo médico. Discutimos novas opcións de terapia.',
+    image: false
+  },
+  {
+    id: 5,
+    category: 'daily',
+    date: '2026-01-28',
+    title: locale === 'es' ? 'Celebrando pequeñas victorias' : locale === 'en' ? 'Celebrating small victories' : 'Celebrando pequenas vitorias',
+    content: locale === 'es'
+      ? '[Nombre] logró completar una tarea que antes le costaba mucho. ¡Estamos muy orgullosos!'
+      : locale === 'en'
+      ? '[Name] managed to complete a task that used to be very difficult. We are so proud!'
+      : '[Nome] logrou completar unha tarefa que antes lle custaba moito. Estamos moi orgullosos!',
+    image: true
+  },
+  {
+    id: 6,
+    category: 'medical',
+    date: '2026-01-25',
+    title: locale === 'es' ? 'Nuevo equipamiento adaptado' : locale === 'en' ? 'New adapted equipment' : 'Novo equipamento adaptado',
+    content: locale === 'es'
+      ? 'Recibimos nuevo equipamiento médico adaptado que facilitará sus actividades diarias.'
+      : locale === 'en'
+      ? 'We received new adapted medical equipment that will facilitate her daily activities.'
+      : 'Recibimos novo equipamento médico adaptado que facilitará as súas actividades diarias.',
+    image: true
+  }
+];
+---
+
+<MainLayout title={`${title} - Ayuda a [Nombre]`} description={description} locale={locale}>
+  <!-- Header Section -->
+  <section class="bg-gradient-to-br from-deep-indigo-600 via-deep-indigo-700 to-deep-indigo-800 py-16">
+    <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+      <div class="flex items-center justify-center space-x-3 mb-4">
+        <Icon name="Calendar" className="w-10 h-10 text-warm-emerald-400" client:load />
+        <h1 class="text-4xl sm:text-5xl font-bold text-white">
+          {t('updates.title', locale)}
+        </h1>
+      </div>
+      <p class="text-xl text-deep-indigo-200 max-w-2xl mx-auto">
+        {t('updates.subtitle', locale)}
+      </p>
+    </div>
+  </section>
+
+  <!-- Filter Tabs (Sticky) -->
+  <div class="sticky top-16 z-40 bg-white/95 backdrop-blur-md border-b border-soft-slate-200 shadow-sm">
+    <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex items-center space-x-2 overflow-x-auto py-4">
+        <button class="px-4 py-2 bg-deep-indigo-600 text-white text-sm font-semibold rounded-lg whitespace-nowrap">
+          {t('updates.filter.all', locale)}
+        </button>
+        <button class="px-4 py-2 bg-soft-slate-100 text-soft-slate-700 text-sm font-medium rounded-lg hover:bg-soft-slate-200 transition-colors whitespace-nowrap">
+          <Icon name="Stethoscope" className="w-4 h-4 inline-block mr-1" client:load />
+          {t('updates.filter.medical', locale)}
+        </button>
+        <button class="px-4 py-2 bg-soft-slate-100 text-soft-slate-700 text-sm font-medium rounded-lg hover:bg-soft-slate-200 transition-colors whitespace-nowrap">
+          <Icon name="Home" className="w-4 h-4 inline-block mr-1" client:load />
+          {t('updates.filter.daily', locale)}
+        </button>
+        <button class="px-4 py-2 bg-soft-slate-100 text-soft-slate-700 text-sm font-medium rounded-lg hover:bg-soft-slate-200 transition-colors whitespace-nowrap">
+          <Icon name="Star" className="w-4 h-4 inline-block mr-1" client:load />
+          {t('updates.filter.milestones', locale)}
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Updates Grid (Masonry Layout) -->
+  <section class="py-16 bg-soft-slate-50">
+    <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+      <!-- CSS Masonry Grid -->
+      <div class="columns-1 md:columns-2 gap-6 space-y-6">
+        {updates.map((update) => (
+          <div class="break-inside-avoid">
+            <article class="bg-white rounded-xl shadow-lg border border-soft-slate-200 overflow-hidden hover:shadow-xl transition-shadow">
+              <!-- Image Placeholder (if update has image) -->
+              {update.image && (
+                <div class="aspect-video bg-gradient-to-br from-soft-slate-200 to-soft-slate-300 flex items-center justify-center">
+                  <Icon name="Image" className="w-12 h-12 text-soft-slate-400" client:load />
+                </div>
+              )}
+
+              <!-- Content -->
+              <div class="p-6">
+                <!-- Category Badge & Date -->
+                <div class="flex items-center justify-between mb-3">
+                  <span class={`inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold ${
+                    update.category === 'medical'
+                      ? 'bg-deep-indigo-100 text-deep-indigo-700'
+                      : update.category === 'daily'
+                      ? 'bg-warm-emerald-100 text-warm-emerald-700'
+                      : 'bg-soft-slate-200 text-soft-slate-700'
+                  }`}>
+                    {update.category === 'medical' ? (
+                      <Icon name="Stethoscope" className="w-3 h-3 mr-1" client:load />
+                    ) : update.category === 'daily' ? (
+                      <Icon name="Home" className="w-3 h-3 mr-1" client:load />
+                    ) : (
+                      <Icon name="Star" className="w-3 h-3 mr-1" client:load />
+                    )}
+                    {update.category === 'medical'
+                      ? t('updates.filter.medical', locale)
+                      : update.category === 'daily'
+                      ? t('updates.filter.daily', locale)
+                      : t('updates.filter.milestones', locale)}
+                  </span>
+                  <time class="text-xs text-soft-slate-500 flex items-center">
+                    <Icon name="Calendar" className="w-3 h-3 mr-1" client:load />
+                    {new Date(update.date).toLocaleDateString(locale === 'en' ? 'en-US' : locale === 'gl' ? 'gl-ES' : 'es-ES', {
+                      year: 'numeric',
+                      month: 'short',
+                      day: 'numeric'
+                    })}
+                  </time>
+                </div>
+
+                <!-- Title -->
+                <h3 class="text-lg font-bold text-deep-indigo-900 mb-2">
+                  {update.title}
+                </h3>
+
+                <!-- Content -->
+                <p class="text-soft-slate-700 text-sm leading-relaxed">
+                  {update.content}
+                </p>
+              </div>
+            </article>
+          </div>
+        ))}
+      </div>
+
+      <!-- Empty state (hidden when there are updates) -->
+      {updates.length === 0 && (
+        <div class="text-center py-16">
+          <Icon name="Calendar" className="w-16 h-16 text-soft-slate-400 mx-auto mb-4" client:load />
+          <p class="text-soft-slate-600 text-lg">
+            {t('updates.noUpdates', locale)}
+          </p>
+        </div>
+      )}
+    </div>
+  </section>
+
+  <!-- Social Feed Section -->
+  <section class="py-20 bg-white">
+    <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center mb-12">
+        <h2 class="text-3xl font-bold text-deep-indigo-900 mb-4">
+          {t('updates.socialFeed', locale)}
+        </h2>
+        <p class="text-soft-slate-600">
+          {locale === 'es'
+            ? 'Síguenos en redes sociales para actualizaciones en tiempo real'
+            : locale === 'en'
+            ? 'Follow us on social media for real-time updates'
+            : 'Síguenos nas redes sociais para actualizacións en tempo real'}
+        </p>
+      </div>
+
+      <!-- Social Media Embed Placeholders -->
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+        <!-- Instagram Placeholder -->
+        <div class="bg-gradient-to-br from-soft-slate-100 to-soft-slate-200 rounded-xl p-12 text-center border-2 border-dashed border-soft-slate-300">
+          <Icon name="Instagram" className="w-16 h-16 text-soft-slate-400 mx-auto mb-4" client:load />
+          <h3 class="text-lg font-bold text-soft-slate-700 mb-2">Instagram</h3>
+          <p class="text-sm text-soft-slate-600 mb-4">
+            {locale === 'es'
+              ? 'Espacio para embed de Instagram'
+              : locale === 'en'
+              ? 'Space for Instagram embed'
+              : 'Espazo para embed de Instagram'}
+          </p>
+          <a
+            href="https://instagram.com"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="inline-flex items-center px-4 py-2 bg-deep-indigo-600 text-white text-sm font-semibold rounded-lg hover:bg-deep-indigo-700 transition-colors"
+          >
+            <Icon name="ExternalLink" className="w-4 h-4 mr-2" client:load />
+            {locale === 'es' ? 'Visitar perfil' : locale === 'en' ? 'Visit profile' : 'Visitar perfil'}
+          </a>
+        </div>
+
+        <!-- Twitter/X Placeholder -->
+        <div class="bg-gradient-to-br from-soft-slate-100 to-soft-slate-200 rounded-xl p-12 text-center border-2 border-dashed border-soft-slate-300">
+          <Icon name="Twitter" className="w-16 h-16 text-soft-slate-400 mx-auto mb-4" client:load />
+          <h3 class="text-lg font-bold text-soft-slate-700 mb-2">Twitter / X</h3>
+          <p class="text-sm text-soft-slate-600 mb-4">
+            {locale === 'es'
+              ? 'Espacio para embed de Twitter/X'
+              : locale === 'en'
+              ? 'Space for Twitter/X embed'
+              : 'Espazo para embed de Twitter/X'}
+          </p>
+          <a
+            href="https://twitter.com"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="inline-flex items-center px-4 py-2 bg-deep-indigo-600 text-white text-sm font-semibold rounded-lg hover:bg-deep-indigo-700 transition-colors"
+          >
+            <Icon name="ExternalLink" className="w-4 h-4 mr-2" client:load />
+            {locale === 'es' ? 'Visitar perfil' : locale === 'en' ? 'Visit profile' : 'Visitar perfil'}
+          </a>
+        </div>
+      </div>
+
+      <!-- Call to Action -->
+      <div class="mt-16 text-center bg-gradient-to-br from-warm-emerald-50 to-warm-emerald-100 rounded-2xl p-8 border border-warm-emerald-200">
+        <h3 class="text-2xl font-bold text-warm-emerald-900 mb-4">
+          {locale === 'es'
+            ? '¿Quieres ser parte de esta historia?'
+            : locale === 'en'
+            ? 'Want to be part of this story?'
+            : 'Queres ser parte desta historia?'}
+        </h3>
+        <p class="text-warm-emerald-800 mb-6">
+          {locale === 'es'
+            ? 'Tu apoyo puede cambiar la vida de [Nombre]. Cada donación cuenta.'
+            : locale === 'en'
+            ? 'Your support can change [Name]\'s life. Every donation counts.'
+            : 'O teu apoio pode cambiar a vida de [Nome]. Cada doazón conta.'}
+        </p>
+        <a
+          href={`/${locale}/#donate`}
+          class="inline-flex items-center px-8 py-3 bg-warm-emerald-500 text-white text-lg font-bold rounded-xl hover:bg-warm-emerald-600 transition-colors shadow-lg"
+        >
+          <Icon name="Heart" className="w-5 h-5 mr-2" client:load />
+          {t('common.cta.donate', locale)}
+        </a>
+      </div>
+    </div>
+  </section>
+</MainLayout>

@@ -1,0 +1,95 @@
+---
+import { t, type Locale } from '../utils/i18n';
+import Icon from './Icon';
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+---
+
+<section class="relative bg-gradient-to-br from-deep-indigo-50 via-soft-slate-50 to-warm-emerald-50 overflow-hidden">
+  <!-- Decorative blur element -->
+  <div class="absolute top-0 right-0 w-96 h-96 bg-warm-emerald-200 rounded-full filter blur-3xl opacity-20 -translate-y-1/2 translate-x-1/2"></div>
+  <div class="absolute bottom-0 left-0 w-96 h-96 bg-deep-indigo-200 rounded-full filter blur-3xl opacity-20 translate-y-1/2 -translate-x-1/2"></div>
+
+  <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 lg:py-28">
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
+      <!-- Text Content (Left) -->
+      <div class="space-y-8 text-center lg:text-left">
+        <div class="space-y-4">
+          <h1 class="text-4xl sm:text-5xl lg:text-6xl font-bold text-deep-indigo-900 leading-tight">
+            {t('home.hero.headline', locale)}
+          </h1>
+          <p class="text-lg sm:text-xl text-soft-slate-700 leading-relaxed max-w-2xl mx-auto lg:mx-0">
+            {t('home.hero.subheadline', locale)}
+          </p>
+        </div>
+
+        <!-- CTA Buttons -->
+        <div class="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
+          <!-- Primary CTA - Donate -->
+          <a
+            href="#donate"
+            class="group inline-flex items-center justify-center px-8 py-4 bg-warm-emerald-500 text-white text-lg font-semibold rounded-xl shadow-xl shadow-warm-emerald-500/30 hover:bg-warm-emerald-600 hover:shadow-2xl hover:shadow-warm-emerald-500/40 transition-all duration-300 transform hover:scale-105"
+          >
+            <Icon name="Heart" className="w-5 h-5 mr-3 group-hover:animate-pulse" client:load />
+            {t('home.hero.ctaPrimary', locale)}
+          </a>
+
+          <!-- Secondary CTA - Learn More -->
+          <a
+            href="#story"
+            class="inline-flex items-center justify-center px-8 py-4 bg-deep-indigo-100 text-deep-indigo-700 text-lg font-semibold rounded-xl border-2 border-deep-indigo-200 hover:bg-deep-indigo-200 hover:border-deep-indigo-300 transition-all duration-300"
+          >
+            <Icon name="BookOpen" className="w-5 h-5 mr-3" client:load />
+            {t('home.hero.ctaSecondary', locale)}
+          </a>
+        </div>
+
+        <!-- Trust indicators -->
+        <div class="flex flex-wrap items-center justify-center lg:justify-start gap-6 pt-4 text-soft-slate-600">
+          <div class="flex items-center space-x-2">
+            <Icon name="Shield" className="w-5 h-5 text-warm-emerald-500" client:load />
+            <span class="text-sm font-medium">Donaciones seguras</span>
+          </div>
+          <div class="flex items-center space-x-2">
+            <Icon name="Users" className="w-5 h-5 text-warm-emerald-500" client:load />
+            <span class="text-sm font-medium">234+ donantes</span>
+          </div>
+          <div class="flex items-center space-x-2">
+            <Icon name="CheckCircle" className="w-5 h-5 text-warm-emerald-500" client:load />
+            <span class="text-sm font-medium">100% transparente</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Image (Right) -->
+      <div class="relative">
+        <!-- Decorative background -->
+        <div class="absolute inset-0 bg-gradient-to-br from-warm-emerald-200 to-deep-indigo-200 rounded-2xl transform rotate-3 opacity-20"></div>
+
+        <!-- Image container -->
+        <div class="relative bg-white rounded-2xl shadow-2xl overflow-hidden border-4 border-white">
+          <!-- Placeholder for hero image -->
+          <div class="aspect-[4/5] bg-gradient-to-br from-soft-slate-200 to-soft-slate-300 flex items-center justify-center">
+            <div class="text-center space-y-4 p-8">
+              <Icon name="Image" className="w-16 h-16 text-soft-slate-400 mx-auto" client:load />
+              <p class="text-soft-slate-600 font-medium">Imagen de [Nombre]</p>
+              <p class="text-sm text-soft-slate-500">Placeholder - Agregar foto real</p>
+            </div>
+          </div>
+
+          <!-- Decorative badge -->
+          <div class="absolute top-4 right-4 bg-warm-emerald-500 text-white px-4 py-2 rounded-full shadow-lg">
+            <p class="text-sm font-bold">9 años</p>
+          </div>
+        </div>
+
+        <!-- Decorative blur element for image -->
+        <div class="absolute -bottom-4 -right-4 w-32 h-32 bg-warm-emerald-300 rounded-full filter blur-2xl opacity-30"></div>
+      </div>
+    </div>
+  </div>
+</section>

@@ -1,0 +1,130 @@
+---
+import { t, type Locale } from '../utils/i18n';
+import Icon from './Icon';
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const currentYear = new Date().getFullYear();
+---
+
+<footer class="bg-deep-indigo-900 text-white">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
+      <!-- Brand & Mission -->
+      <div class="space-y-4">
+        <div class="flex items-center space-x-2">
+          <Icon name="Heart" className="w-6 h-6 text-warm-emerald-400" client:load />
+          <h3 class="text-xl font-bold">Ayuda a [Nombre]</h3>
+        </div>
+        <p class="text-deep-indigo-300 text-sm leading-relaxed">
+          {t('home.story.intro', locale)}
+        </p>
+      </div>
+
+      <!-- Quick Links -->
+      <div class="space-y-4">
+        <h4 class="text-lg font-semibold text-warm-emerald-400">Enlaces Rápidos</h4>
+        <ul class="space-y-2">
+          <li>
+            <a href={`/${locale}/`} class="text-deep-indigo-300 hover:text-white transition-colors text-sm flex items-center">
+              <Icon name="Home" className="w-4 h-4 mr-2" client:load />
+              {t('common.nav.home', locale)}
+            </a>
+          </li>
+          <li>
+            <a href={`/${locale}/story`} class="text-deep-indigo-300 hover:text-white transition-colors text-sm flex items-center">
+              <Icon name="BookOpen" className="w-4 h-4 mr-2" client:load />
+              {t('common.nav.story', locale)}
+            </a>
+          </li>
+          <li>
+            <a href={`/${locale}/updates`} class="text-deep-indigo-300 hover:text-white transition-colors text-sm flex items-center">
+              <Icon name="Calendar" className="w-4 h-4 mr-2" client:load />
+              {t('common.nav.updates', locale)}
+            </a>
+          </li>
+          <li>
+            <a href={`/${locale}/privacy`} class="text-deep-indigo-300 hover:text-white transition-colors text-sm flex items-center">
+              <Icon name="Shield" className="w-4 h-4 mr-2" client:load />
+              {t('common.footer.privacy', locale)}
+            </a>
+          </li>
+          <li>
+            <a href={`/${locale}/contact`} class="text-deep-indigo-300 hover:text-white transition-colors text-sm flex items-center">
+              <Icon name="Mail" className="w-4 h-4 mr-2" client:load />
+              {t('common.footer.contact', locale)}
+            </a>
+          </li>
+        </ul>
+      </div>
+
+      <!-- Social Media -->
+      <div class="space-y-4">
+        <h4 class="text-lg font-semibold text-warm-emerald-400">{t('common.footer.followUs', locale)}</h4>
+        <div class="flex space-x-4">
+          <a
+            href="https://facebook.com"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="w-10 h-10 rounded-lg bg-deep-indigo-800 hover:bg-warm-emerald-500 transition-colors flex items-center justify-center"
+            aria-label="Facebook"
+          >
+            <Icon name="Facebook" className="w-5 h-5" client:load />
+          </a>
+          <a
+            href="https://instagram.com"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="w-10 h-10 rounded-lg bg-deep-indigo-800 hover:bg-warm-emerald-500 transition-colors flex items-center justify-center"
+            aria-label="Instagram"
+          >
+            <Icon name="Instagram" className="w-5 h-5" client:load />
+          </a>
+          <a
+            href="https://twitter.com"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="w-10 h-10 rounded-lg bg-deep-indigo-800 hover:bg-warm-emerald-500 transition-colors flex items-center justify-center"
+            aria-label="Twitter"
+          >
+            <Icon name="Twitter" className="w-5 h-5" client:load />
+          </a>
+        </div>
+        <button
+          class="mt-4 inline-flex items-center px-4 py-2 bg-warm-emerald-500 hover:bg-warm-emerald-600 text-white text-sm font-semibold rounded-lg transition-colors"
+        >
+          <Icon name="Share2" className="w-4 h-4 mr-2" client:load />
+          {t('common.cta.shareStory', locale)}
+        </button>
+      </div>
+    </div>
+
+    <!-- Medical Disclaimer -->
+    <div class="border-t border-deep-indigo-800 pt-8 mb-8">
+      <div class="bg-deep-indigo-800/50 rounded-lg p-6 border border-deep-indigo-700">
+        <div class="flex items-start space-x-3">
+          <Icon name="AlertCircle" className="w-5 h-5 text-warm-emerald-400 flex-shrink-0 mt-0.5" client:load />
+          <div>
+            <h5 class="font-semibold text-warm-emerald-400 mb-2">{t('common.footer.disclaimer', locale)}</h5>
+            <p class="text-deep-indigo-300 text-sm leading-relaxed">
+              {t('common.footer.disclaimerText', locale)}
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Copyright -->
+    <div class="border-t border-deep-indigo-800 pt-8 text-center">
+      <p class="text-deep-indigo-400 text-sm">
+        &copy; {currentYear} Ayuda a [Nombre]. {t('common.footer.rights', locale)}.
+      </p>
+      <p class="text-deep-indigo-500 text-xs mt-2">
+        Sitio web construido con <span class="text-warm-emerald-400">♥</span> y esperanza
+      </p>
+    </div>
+  </div>
+</footer>

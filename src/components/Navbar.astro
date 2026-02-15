@@ -1,0 +1,146 @@
+---
+import { t, locales, type Locale } from '../utils/i18n';
+import Icon from './Icon';
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const currentPath = Astro.url.pathname;
+---
+
+<nav class="sticky top-0 z-50 backdrop-blur-md bg-white/80 border-b border-soft-slate-200 shadow-sm">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="flex justify-between items-center h-16">
+      <!-- Logo/Brand -->
+      <div class="flex-shrink-0">
+        <a href={`/${locale}/`} class="text-2xl font-bold text-deep-indigo-800 hover:text-deep-indigo-600 transition-colors">
+          <Icon name="Heart" className="inline-block w-6 h-6 text-warm-emerald-500 mr-2" client:load />
+          <span class="hidden sm:inline">Ayuda a [Nombre]</span>
+          <span class="sm:hidden">[N]</span>
+        </a>
+      </div>
+
+      <!-- Desktop Navigation -->
+      <div class="hidden md:flex md:items-center md:space-x-8">
+        <a
+          href={`/${locale}/`}
+          class={`text-sm font-medium transition-colors ${
+            currentPath === `/${locale}/` || currentPath === `/${locale}`
+              ? 'text-deep-indigo-700'
+              : 'text-soft-slate-700 hover:text-deep-indigo-600'
+          }`}
+        >
+          {t('common.nav.home', locale)}
+        </a>
+        <a
+          href={`/${locale}/story`}
+          class={`text-sm font-medium transition-colors ${
+            currentPath.includes('/story')
+              ? 'text-deep-indigo-700'
+              : 'text-soft-slate-700 hover:text-deep-indigo-600'
+          }`}
+        >
+          {t('common.nav.story', locale)}
+        </a>
+        <a
+          href={`/${locale}/updates`}
+          class={`text-sm font-medium transition-colors ${
+            currentPath.includes('/updates')
+              ? 'text-deep-indigo-700'
+              : 'text-soft-slate-700 hover:text-deep-indigo-600'
+          }`}
+        >
+          {t('common.nav.updates', locale)}
+        </a>
+
+        <!-- Language Switcher -->
+        <div class="flex items-center space-x-2 border-l border-soft-slate-300 pl-6">
+          {locales.map((lang) => (
+            <a
+              href={`/${lang}${currentPath.replace(/^\/(es|en|gl)/, '')}`}
+              class={`text-xs font-medium uppercase px-2 py-1 rounded transition-colors ${
+                locale === lang
+                  ? 'bg-deep-indigo-100 text-deep-indigo-700'
+                  : 'text-soft-slate-600 hover:bg-soft-slate-100'
+              }`}
+            >
+              {lang}
+            </a>
+          ))}
+        </div>
+
+        <!-- Donate Button -->
+        <a
+          href="#donate"
+          class="inline-flex items-center px-6 py-2.5 bg-warm-emerald-500 text-white text-sm font-semibold rounded-lg shadow-lg shadow-warm-emerald-500/30 hover:bg-warm-emerald-600 hover:shadow-xl hover:shadow-warm-emerald-500/40 transition-all duration-300 transform hover:scale-105"
+        >
+          <Icon name="Heart" className="w-4 h-4 mr-2" client:load />
+          {t('common.nav.donate', locale)}
+        </a>
+      </div>
+
+      <!-- Mobile Menu Button -->
+      <div class="md:hidden flex items-center space-x-4">
+        <!-- Mobile Donate Button -->
+        <a
+          href="#donate"
+          class="inline-flex items-center px-4 py-2 bg-warm-emerald-500 text-white text-sm font-semibold rounded-lg shadow-lg"
+        >
+          <Icon name="Heart" className="w-4 h-4" client:load />
+        </a>
+
+        <!-- Hamburger Menu -->
+        <button
+          type="button"
+          class="text-soft-slate-700 hover:text-deep-indigo-600 focus:outline-none focus:ring-2 focus:ring-deep-indigo-500 rounded-lg p-2"
+          aria-label="Open menu"
+        >
+          <Icon name="Menu" className="w-6 h-6" client:load />
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Mobile Menu (Hidden by default - can be toggled with JavaScript) -->
+  <div class="hidden md:hidden border-t border-soft-slate-200 bg-white/95 backdrop-blur-md">
+    <div class="px-4 py-4 space-y-3">
+      <a
+        href={`/${locale}/`}
+        class="block text-base font-medium text-soft-slate-700 hover:text-deep-indigo-600 hover:bg-soft-slate-50 px-3 py-2 rounded-lg transition-colors"
+      >
+        {t('common.nav.home', locale)}
+      </a>
+      <a
+        href={`/${locale}/story`}
+        class="block text-base font-medium text-soft-slate-700 hover:text-deep-indigo-600 hover:bg-soft-slate-50 px-3 py-2 rounded-lg transition-colors"
+      >
+        {t('common.nav.story', locale)}
+      </a>
+      <a
+        href={`/${locale}/updates`}
+        class="block text-base font-medium text-soft-slate-700 hover:text-deep-indigo-600 hover:bg-soft-slate-50 px-3 py-2 rounded-lg transition-colors"
+      >
+        {t('common.nav.updates', locale)}
+      </a>
+
+      <!-- Mobile Language Switcher -->
+      <div class="flex items-center space-x-2 pt-3 border-t border-soft-slate-200">
+        <span class="text-sm text-soft-slate-600 mr-2">Idioma:</span>
+        {locales.map((lang) => (
+          <a
+            href={`/${lang}${currentPath.replace(/^\/(es|en|gl)/, '')}`}
+            class={`text-xs font-medium uppercase px-3 py-1.5 rounded transition-colors ${
+              locale === lang
+                ? 'bg-deep-indigo-100 text-deep-indigo-700'
+                : 'bg-soft-slate-100 text-soft-slate-600 hover:bg-soft-slate-200'
+            }`}
+          >
+            {lang}
+          </a>
+        ))}
+      </div>
+    </div>
+  </div>
+</nav>

@@ -1,0 +1,128 @@
+---
+import { t, type Locale } from '../utils/i18n';
+import Icon from './Icon';
+
+interface Props {
+  locale: Locale;
+  raised?: number;
+  target?: number;
+  supporters?: number;
+  daysLeft?: number;
+}
+
+const {
+  locale,
+  raised = 45000,
+  target = 100000,
+  supporters = 234,
+  daysLeft = 45
+} = Astro.props;
+
+const percentage = Math.round((raised / target) * 100);
+const formattedRaised = new Intl.NumberFormat(locale === 'en' ? 'en-US' : 'es-ES', {
+  style: 'currency',
+  currency: 'USD',
+  minimumFractionDigits: 0,
+}).format(raised);
+
+const formattedTarget = new Intl.NumberFormat(locale === 'en' ? 'en-US' : 'es-ES', {
+  style: 'currency',
+  currency: 'USD',
+  minimumFractionDigits: 0,
+}).format(target);
+---
+
+<section id="donate" class="py-16 bg-soft-slate-50">
+  <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="bg-gradient-to-br from-white to-soft-slate-50 rounded-2xl shadow-xl border border-soft-slate-200 overflow-hidden">
+      <!-- Header -->
+      <div class="bg-gradient-to-r from-deep-indigo-600 to-deep-indigo-700 px-8 py-6">
+        <h2 class="text-3xl font-bold text-white text-center">
+          {t('home.goal.title', locale)}
+        </h2>
+      </div>
+
+      <!-- Content -->
+      <div class="p-8 space-y-8">
+        <!-- Progress Bar -->
+        <div class="space-y-3">
+          <div class="flex justify-between items-baseline">
+            <span class="text-3xl font-bold text-deep-indigo-900">{formattedRaised}</span>
+            <span class="text-lg text-soft-slate-600">
+              {t('home.goal.raised', locale)} de {formattedTarget}
+            </span>
+          </div>
+
+          <!-- Animated Progress Bar -->
+          <div class="relative h-4 bg-soft-slate-200 rounded-full overflow-hidden shadow-inner">
+            <div
+              class="absolute inset-y-0 left-0 bg-gradient-to-r from-warm-emerald-500 to-warm-emerald-400 rounded-full animate-pulse-slow shadow-lg"
+              style={`width: ${percentage}%`}
+            >
+              <!-- Shine effect -->
+              <div class="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent"></div>
+            </div>
+          </div>
+
+          <p class="text-right text-sm font-semibold text-warm-emerald-600">
+            {percentage}% {locale === 'es' ? 'alcanzado' : locale === 'en' ? 'reached' : 'acadado'}
+          </p>
+        </div>
+
+        <!-- Stats Grid -->
+        <div class="grid grid-cols-3 gap-4">
+          <!-- Supporters -->
+          <div class="bg-soft-slate-50 rounded-xl p-4 text-center border border-soft-slate-200">
+            <div class="flex justify-center mb-2">
+              <Icon name="Users" className="w-8 h-8 text-deep-indigo-600" client:load />
+            </div>
+            <p class="text-2xl font-bold text-deep-indigo-900">{supporters}</p>
+            <p class="text-sm text-soft-slate-600 mt-1">{t('home.goal.supporters', locale)}</p>
+          </div>
+
+          <!-- Target -->
+          <div class="bg-soft-slate-50 rounded-xl p-4 text-center border border-soft-slate-200">
+            <div class="flex justify-center mb-2">
+              <Icon name="Target" className="w-8 h-8 text-deep-indigo-600" client:load />
+            </div>
+            <p class="text-2xl font-bold text-deep-indigo-900">{formattedTarget}</p>
+            <p class="text-sm text-soft-slate-600 mt-1">{t('home.goal.target', locale)}</p>
+          </div>
+
+          <!-- Days Left -->
+          <div class="bg-soft-slate-50 rounded-xl p-4 text-center border border-soft-slate-200">
+            <div class="flex justify-center mb-2">
+              <Icon name="Calendar" className="w-8 h-8 text-deep-indigo-600" client:load />
+            </div>
+            <p class="text-2xl font-bold text-deep-indigo-900">{daysLeft}</p>
+            <p class="text-sm text-soft-slate-600 mt-1">{t('home.goal.daysLeft', locale)}</p>
+          </div>
+        </div>
+
+        <!-- Description -->
+        <div class="bg-deep-indigo-50 rounded-xl p-6 border border-deep-indigo-100">
+          <div class="flex items-start space-x-3">
+            <Icon name="Info" className="w-5 h-5 text-deep-indigo-600 flex-shrink-0 mt-0.5" client:load />
+            <p class="text-sm text-deep-indigo-900 leading-relaxed">
+              {t('home.goal.description', locale)}
+            </p>
+          </div>
+        </div>
+
+        <!-- Donate Button -->
+        <div class="text-center pt-4">
+          <button
+            class="group inline-flex items-center justify-center px-10 py-4 bg-warm-emerald-500 text-white text-lg font-bold rounded-xl shadow-xl shadow-warm-emerald-500/30 hover:bg-warm-emerald-600 hover:shadow-2xl hover:shadow-warm-emerald-500/40 transition-all duration-300 transform hover:scale-105 w-full sm:w-auto"
+          >
+            <Icon name="Heart" className="w-6 h-6 mr-3 group-hover:animate-pulse" client:load />
+            {t('common.cta.donate', locale)}
+            <Icon name="ArrowRight" className="w-5 h-5 ml-3 group-hover:translate-x-1 transition-transform" client:load />
+          </button>
+          <p class="mt-4 text-sm text-soft-slate-600">
+            {locale === 'es' ? 'Cada donación cuenta. Gracias por tu apoyo.' : locale === 'en' ? 'Every donation counts. Thank you for your support.' : 'Cada doazón conta. Grazas polo teu apoio.'}
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
